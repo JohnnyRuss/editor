@@ -11,34 +11,34 @@ async function writePosts() {
     function generateReaction() {
       return {
         like: {
-          count: generateRandomNums(),
-          fig: "👍",
           id: generateID(),
+          fig: "👍",
           title: "like",
+          count: generateRandomNums(),
         },
         wow: {
-          count: generateRandomNums(),
-          fig: "😯",
           id: generateID(),
+          fig: "😯",
           title: "wow",
+          count: generateRandomNums(),
         },
         heart: {
-          count: generateRandomNums(),
-          fig: "♥",
           id: generateID(),
+          fig: "♥",
           title: "heart",
+          count: generateRandomNums(),
         },
         rocket: {
-          count: generateRandomNums(),
-          fig: "🚀",
           id: generateID(),
+          fig: "🚀",
           title: "rocket",
+          count: generateRandomNums(),
         },
         coffee: {
-          count: generateRandomNums(),
-          fig: "☕",
           id: generateID(),
+          fig: "☕",
           title: "coffee",
+          count: generateRandomNums(),
         },
       };
     }
@@ -56,7 +56,10 @@ async function writePosts() {
 
     const modified = data.map((post) => modifiePost(post));
 
-    fs.writeFileSync("./write-file/posts.json", JSON.stringify(modified));
+    fs.writeFileSync(
+      "./write-file/output/posts.json",
+      JSON.stringify(modified)
+    );
   } catch (error) {
     console.log(error);
   }
@@ -77,7 +80,10 @@ async function writeUsers() {
 
     const modified = data.map((user) => modifieUser(user));
 
-    fs.writeFileSync("./write-file/users.json", JSON.stringify(modified));
+    fs.writeFileSync(
+      "./write-file/output/users.json",
+      JSON.stringify(modified)
+    );
   } catch (error) {
     console.log(error);
   }
@@ -98,16 +104,35 @@ async function writeComments() {
 
     const modified = data.map((comment) => modifieUser(comment));
 
-    fs.writeFileSync("./write-file/comments.json", JSON.stringify(modified));
+    fs.writeFileSync(
+      "./write-file/output/comments.json",
+      JSON.stringify(modified)
+    );
   } catch (error) {
     console.log(error);
   }
 }
 
-function initJsonPlacholder() {
-  writeUsers();
-  writeComments();
+function writeCustom({ fileName, docCount = 1 }) {
+  const data = [];
+
+  for (let i = 0; i < docCount; i++) {
+    data.push({
+      img: `/assets/gallery/gallery-${32 + i}.webp`,
+      productId: `productId-${32 + i}`,
+    });
+  }
+
+  console.log(data);
+
+  fs.writeFileSync(
+    `./write-file/output/${fileName || "custom"}.json`,
+    JSON.stringify(data)
+  );
 }
 
-writePosts();
-// initJsonPlacholder();
+function initJsonPlacholder() {
+  writeCustom({ docCount: 17 });
+}
+
+initJsonPlacholder();

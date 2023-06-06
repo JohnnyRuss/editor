@@ -17,16 +17,16 @@ async function readFiles(dirname) {
   );
 }
 
-async function useSharp(file) {
+async function useSharp(file, fileName) {
   await sharp(file.path)
     .webp({ quality: 80 })
-    .toFile(`./image-converter/output/${file.fileName}.webp`);
+    .toFile(`./image-converter/output/${fileName || file.fileName}.webp`);
 }
 
 async function generator() {
   try {
     await readFiles("./image-converter/images");
-    paths.map(async (file) => await useSharp(file));
+    paths.map(async (file, i) => await useSharp(file));
   } catch (error) {
     console.log(error, 24);
   }
